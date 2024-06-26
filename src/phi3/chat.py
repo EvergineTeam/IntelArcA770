@@ -9,7 +9,7 @@ PHI3_PROMPT_FORMAT = "<|user|>\n{prompt}<|end|>\n<|assistant|>"
 
 model_id = "microsoft/Phi-3-mini-4k-instruct"
 _prompt = "Would you recommend Evergine to create graphics-rich web applications based on WASM?"
-_max_tokens = 64
+_max_tokens = 512
 
 model = AutoModelForCausalLM.from_pretrained(
     model_id,
@@ -39,8 +39,20 @@ with torch.inference_mode():
     torch.xpu.synchronize()
     end = time.time()
     output_str = tokenizer.decode(output[0], skip_special_tokens=False)
+    output_str = (
+        output_str.replace("<|user|>", "")
+        .replace("<|assistant|>", "")
+        .replace("<|end|>", "")[len(_prompt) + 4 :]
+    )
     print(f"Inference time: {end-st} s")
+    print(
+        f"Max memory allocated: {torch.xpu.max_memory_allocated() / (1024 ** 3):02} GB"
+    )
     print("-" * 20, "Prompt", "-" * 20)
-    print(prompt)
+    print(
+        prompt.replace("<|user|>", "")
+        .replace("<|assistant|>", "")
+        .replace("<|end|>", "")
+    )
     print("-" * 20, "Output", "-" * 20)
     print(output_str)
