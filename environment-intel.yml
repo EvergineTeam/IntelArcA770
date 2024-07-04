@@ -1,0 +1,25 @@
+name: arc770
+channels:
+  - conda-forge
+dependencies:
+  - libuv=1.48.0
+  - packaging=24.1
+  - pip=24.0
+  - pkg-config=0.29.2
+  - python=3.11.9
+  - pip:
+      - --extra-index-url https://pytorch-extension.intel.com/release-whl/stable/xpu/us/
+      - torch==2.1.0.post2
+      - torchaudio==2.1.0.post2
+      - torchvision==0.16.0.post2
+      - intel-extension-for-pytorch==2.1.30.post0
+      - huggingface-hub==0.23.4
+      - setuptools==69.5.1
+      - numpy==1.26.4
+      - transformers==4.37.0
+      - accelerate==0.23.0
+      - sentencepiece==0.2.0
+      - ipex-llm[xpu]==2.1.0b20240625
+      - bitsandbytes==0.43.1
+      - datasets==2.20.0
+      - protobuf==5.27.2

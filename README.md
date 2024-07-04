@@ -12,7 +12,7 @@ Samples running deep learning models on Intel GPU Arc A770 on Windows, natively 
 
 ## Windows native setup
 
-Intel provides a [comprehensive guide](https://intel.GitHub.io/intel-extension-for-pytorch/index.html#installation) to get ready the python extension for the Arc GPU. However, setting up the Arc A770 GPU on Windows require some initial adjustments and a bit of troubleshooting. Here’s a detailed walkthrough of the setup process.
+Intel provides a [comprehensive guide](https://intel.GitHub.io/intel-extension-for-pytorch/index.html#installation) to get ready the python extension for the Arc GPU. Nevertheless, setting up the Arc A770 GPU on Windows require some initial adjustments and a bit of troubleshooting. Here’s a detailed walkthrough of the setup process.
 
 ![Intel extension for pytorch install guide](img/install.png)
 
@@ -32,9 +32,8 @@ mamba activate arcA770
 Install-Module Pscx -Scope CurrentUser -AllowClobber
 Invoke-BatchFile 'C:\Program Files (x86)\Intel\oneAPI\setvars.bat'
 mamba install pkg-config libuv
-python -m pip install torch==2.1.0a0 torchvision==0.16.0a0 torchaudio==2.1.0a0 intel-extension-for-pytorch==2.1.10 --extra-index-url https://pytorch-extension.intel.com/release-whl/stable/xpu/us/
-python -m pip install setuptools==69.5.1
-pip install numpy==1.26.4
+python -m pip install torch==2.1.0.post2 torchvision==0.16.0.post2 torchaudio==2.1.0.post2 intel-extension-for-pytorch==2.1.30.post0 --extra-index-url https://pytorch-extension.intel.com/release-whl/stable/xpu/us/
+python -m pip install setuptools==69.5.1 huggingface-hub numpy==1.26.4
 ```
 
 Here you may notice some tweaks over the official guide. The first one is the usage of Pscx powershell extension. This enables the `Invoke-BatchFile` command, which is used to set the oneAPI environment variables. The second one is the installation of `setuptools` and `numpy==1.26.4`, that are required to avoid some compatibility issues.
@@ -45,7 +44,7 @@ Here you may notice some tweaks over the official guide. The first one is the us
 >
 > The `Invoke-BatchFile` command is used to run the `setvars.bat` script that sets the environment variables for the oneAPI toolkit. This script is located in the oneAPI installation directory. The path may vary depending on the installation directory you chose.
 >
-> Working on Windows with mamba, you may find that the PATH environment variable gets too long, which can be problematic when running the `setvars.bat` script. To avoid this issue, there is included the `setup_vars.ps1` script that sets the necessary environment variables for the Intel extension for PyTorch while avoiding this issue.
+> Working on Windows with mamba, you may find that the PATH environment variable gets too long, which can be problematic when running the `setvars.bat` script. To avoid this issue, there is included the `setup_vars.ps1` script that sets the necessary environment variables for oneAPI while avoiding this issue.
 >
 > ```pwsh
 > mamba activate arcA770
